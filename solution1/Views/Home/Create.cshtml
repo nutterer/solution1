@@ -1,0 +1,90 @@
+﻿@using database.Database;
+@using solution1.Models.Business.Home;
+<h2>@ViewBag.Title.</h2>
+<div class="container">
+
+    <h2>Create a goods</h2>
+    
+        <form class="row">
+            <div class="form-group col-lg-3">
+                <label for="GoodsNo">GoodsNO</label>
+                <input type="text" class="form-control" id="GoodsNo" placeholder="GoodsNo">
+                <div class="invalid-tooltip" id="v1" hidden>
+                    Please typing GoodsNo
+                </div>
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="GoodsName">GoodsName</label>
+                <input type="text" class="form-control" id="GoodsName" placeholder="GoodsName">
+                <div class="invalid-tooltip" id="v2" hidden>
+                    Please typing GoodsName
+                </div>
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="Price">Price</label>
+                <input type="text" class="form-control" id="Price" placeholder="Price">
+                <div class="invalid-tooltip" id="v3" hidden>
+                    Please typing Price
+                </div>
+            </div>
+
+        </form>
+        <button id ="save" type="button" class="btn-success" asp-controller="HomeContronller" asp-action="Create">Save</button>
+    
+</div>
+
+<script>
+    $('#save').click(function () {
+        var model = {
+            GoodsNo: $('#GoodsNo').val(),
+            GoodsName: $('#GoodsName').val(),
+            Price: $('#Price').val()
+        }
+        if (model.GoodsName != "" && model.GoodsNo != "" && model.Price != "") {
+            $.ajax({
+                type: 'POST',
+                url: '/Home/bindSave',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+                    alert("success++++****")
+                },
+                error: function (e) {
+
+                }
+            });
+        }
+        else if (model.GoodsNo == "" && model.GoodsName != "" && model.Price != "") {
+            $('#v1').show()
+        }
+        else if (model.GoodsNo == "" && model.GoodsName == "" && model.Price != "") {
+            $('#v1').show()
+            $('#v2').show()
+        }
+        else if (model.GoodsNo == "" && model.GoodsName != "" && model.Price == "") {
+            $('#v1').show()
+            $('#v3').show()
+        }
+        else if (model.GoodsNo != "" && model.GoodsName == "" && model.Price == "") {
+            $('#v2').show()
+            $('#v3').show()
+        }
+        else if (model.GoodsNo != "" && model.GoodsName != "" && model.Price == "") {
+            $('#v3').show()
+        }
+        else if (model.GoodsNo != "" && model.GoodsName == "" && model.Price != "") {
+            $('#v2').show()
+        }
+        else {
+           $('#v1').show()
+           $('#v2').show()
+           $('#v3').show()
+        }
+
+        
+    })
+
+</script>

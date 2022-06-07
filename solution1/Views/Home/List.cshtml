@@ -1,0 +1,68 @@
+﻿@using database.Database;
+@model string
+@{
+    ViewBag.Title = "Home Page";
+
+    var goods = (List<smGood>)ViewBag.goods;
+}
+
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">GoodsNo</th>
+                <th scope="col">GoodsName</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{foreach (var it in goods)
+                {
+                        <tr>
+                            <th scope="row" id="id">@it.GoodsID</th>
+                            <td>@it.GoodsNo</td>
+                            <td>@it.GoodsName</td>
+                            <td>@it.Price</td>
+                            <td>@Model</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = it.GoodsID }) |
+                                @Html.ActionLink("Detail", "Detail", new { id = it.GoodsID }) |
+
+
+                                <button type="button" name="delete" value="@it.GoodsID" class="btn-primary btn-delete">delete</button>
+                            </td>
+                        </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $('.btn-delete').click(function () {
+        var model = {
+            GoodsID: $(this).val()
+            
+        }
+          
+            $.ajax({
+                type: 'POST',
+                url: '/Home/bindDelete',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+                    alert("success++++****")
+                    window.location.reload();
+                },
+                error: function (e) {
+
+                }
+            })
+
+    })
+
+</script>

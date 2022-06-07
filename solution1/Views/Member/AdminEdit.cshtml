@@ -1,0 +1,108 @@
+﻿@using database.Database
+@{
+    ViewBag.Title = "AdminEdit";
+    var UserData = (smUser)ViewBag.user;
+}
+
+<h2>AdminEdit</h2>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Password</th>
+                <th scope="col">Status Admin</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>
+                    <input class="form-control" type="text" id="id" placeholder"" value="@UserData.UserID" disabled />
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="Name" placeholder="name" value="@UserData.UserName" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="Password" placeholder="price" value="@UserData.Password" />
+                </td>
+                <td>
+                    @*<input type="checkbox" onclick="checked( @UserData.IsAdmin )" id="IsAdmin" placeholder="price" value="@UserData.IsAdmin" />*@
+                    
+                    <select class="form-control" name="IsAdmin" id="IsAdmin" placeholder="@UserData.IsAdmin">
+                        @if (UserData.IsAdmin == true)
+                        {
+                            <option value="True" selected="selected">True</option>
+
+                            <option value="False">False</option>
+                        }
+                        else
+                        {
+                            <option value="True" >True</option>
+
+                            <option value="False" selected="selected">False</option>
+                        }
+
+
+
+                    </select>
+
+
+       </td>
+
+       <td>
+
+           <button id="save" type="button" class="form-control btn-success">Save</button>
+                </td>
+            </tr>
+
+
+
+        </tbody>
+    </table>
+</div>
+<script>
+    
+
+    $('#save').click(function () {
+                                    var model = {
+            UserID: $('#id').val(),
+            IsAdmin: $('#IsAdmin').val(),
+            UserName: $('#Name').val(),
+            Password: $('#Password').val()
+        }
+        if (true) {
+            $.ajax({
+                                    type: 'POST',
+                url: '/Member/bindEdit',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+                                        alert("success++++****")
+                    window.location.assign('/Member/AdminList')
+                },
+                error: function (e) {
+                                        console.log(model)
+                }
+                                });
+        }
+        else {
+            alert("plz typing input name and No")
+        }
+
+
+    })
+    @*function checked(IsAdmin)  {
+        if (@UserData.IsAdmin == True) {
+            $('#checkbox').prop('checked') = true
+        }
+        else {
+            $('checkbox').prop('checked') = false
+        }
+        return IsAdmin
+    }*@
+</script>

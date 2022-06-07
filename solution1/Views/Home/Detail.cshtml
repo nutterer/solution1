@@ -1,0 +1,41 @@
+﻿@using database.Database ;
+@{
+    ViewBag.Title = "Detail";
+    var goodsData = (smGood)ViewBag.goods;
+}
+
+<h2>Detail</h2>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">GoodsNo</th>
+                <th scope="col">GoodsName</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>
+                    @goodsData.GoodsID
+                </td>
+                <td>
+                    @goodsData.GoodsNo
+                </td>
+                <td>
+                   @goodsData.GoodsName
+                </td>
+                <td>
+                   @goodsData.Price
+                </td>
+                
+            </tr>
+
+
+
+        </tbody>
+    </table>
+</div>

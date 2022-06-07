@@ -1,0 +1,70 @@
+﻿@using database.Database
+@{
+    ViewBag.Title = "AdminList";
+    var users = (List<smUser>)ViewBag.user;
+}
+}
+
+<h2>AdminList</h2>
+<div class="row">
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Password</th>
+                <th scope="col">Status Admin</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{foreach (var it in users)
+                {
+                    <tr>
+                        <th scope="row" id="id">@it.UserID</th>
+
+                        <td>@it.UserName</td>
+                        <td>@it.Password</td>
+                        <td>@it.IsAdmin</td>
+                        <td>
+                            @Html.ActionLink("Edit", "AdminEdit", new { id = it.UserID }) |
+
+
+
+                            <button type="button" name="delete" value="@it.UserID" class="btn-primary btn-delete">delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</div>
+<script>
+    $('.btn-delete').click(function () {
+        var model = {
+            UserID: $(this).val()
+
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Member/bindDelete',
+            data: JSON.stringify(model),
+            datatype: "json",
+            contentType: 'application/json;',
+            traditional: true,
+            async: false,
+            success: function (e) {
+                alert("success++++****")
+                window.location.reload();
+            },
+            error: function (e) {
+
+            }
+        })
+
+    })
+
+</script>
+

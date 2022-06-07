@@ -1,0 +1,77 @@
+﻿@using database.Database ;
+
+@{
+    ViewBag.Title = "Edit";
+
+    var goodsData = (smGood)ViewBag.goods;
+}
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">GoodsNo</th>
+                <th scope="col">GoodsName</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>
+                    <input class="form-control" type="text" id="id" placeholder"" value="@goodsData.GoodsID" disabled/>
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="No" placeholder="number" value="@goodsData.GoodsNo" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="Name" placeholder="name" value="@goodsData.GoodsName"/>
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="Price" placeholder="price" value="@goodsData.Price"/>
+                </td>
+                <td>
+                    <button class="form-control btn-success" id="save" type="button"  >Save</button>
+                </td>
+            </tr>
+                
+                    
+          
+        </tbody>
+    </table>
+</div>
+<script>
+    $('#save').click(function () {
+        var model = {
+            GoodsID: $('#id').val(),
+            GoodsNo: $('#No').val(),
+            GoodsName: $('#Name').val(),
+            Price: $('#Price').val()
+        }
+        if (model.GoodsName != "" && model.GoodsName != "") {
+            $.ajax({
+                type: 'POST',
+                url: '/Home/bindEdit',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+                    alert("success++++****")
+                    window.location.assign('/Home/List')
+                },
+                error: function (e) {
+
+                }
+            });
+        }
+        else {
+            alert("plz typing input name and No")
+        }
+
+
+    })
+
+</script>
